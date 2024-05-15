@@ -13,7 +13,7 @@ def RegisterView(request):
         last_name = request.POST.get('last_name')
         email = request.POST.get('email')
         password = request.POST.get('password')
-        
+
         # Validating form data
         if not (first_name and last_name and email and password):
             messages.error(request, 'All fields are required.', extra_tags='danger')
@@ -47,5 +47,37 @@ def RegisterView(request):
     return render(request, "accounts/register.html")
 
 
-def LoginView(request) :    
+def LoginView(request) :
+    try :
+        if request.method == "POST" :
+            print("Current Inbuild User is ::->",request.user)
+            email = request.POST.get('email')
+            password = request.POST.get('password')
+            # Validating form data
+            if not (email and password):
+                messages.error(request, 'Email and Password are required.', extra_tags='danger')
+                return render(request, "accounts/login.html")
+            
+            # Fetching user by email
+            try:
+                user = User.objects.get(email=email)
+            except User.DoesNotExist:
+                messages.error(request, 'This email does not exist.', extra_tags='danger')
+                return redirect('login')
+            if user.password == custom_hasher(password) :
+                messages.success(request, 'Login Successfully !', extra_tags='success')
+                return redirect('home')
+            else :
+                messages.error(request, 'Invalid password.', extra_tags='danger')
+                return render(request, "accounts/login.html")
+            
+    except Exception as e:
+            messages.error(request, f'An error occurred: {str(e)}', extra_tags='danger')
+            return render(request, "accounts/login.html")
+
     return render(request, "accounts/login.html")
+
+
+
+
+

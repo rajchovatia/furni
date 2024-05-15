@@ -1,0 +1,49 @@
+{% extends "base/base.html" %}
+{% block start %}
+
+    <section class="section-conten padding-y" style="min-height:84vh">
+    <!-- ============================ COMPONENT LOGIN   ================================= -->
+    <div class="card mx-auto" style="max-width: 380px; margin-top: 100px;">
+        <div class="card-body">
+            <h4 class="card-title mb-4">Sign in</h4>
+            <form method="POST" action="-">
+                {% csrf_token %}
+                {% include "base/alert.html" %}
+
+                <div class="form-group">
+                    <input name="email" class="form-control" placeholder="Email" type="email" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid email.
+                    </div>
+                </div> <!-- form-group// -->
+                <div class="form-group">
+                    <input name="password" class="form-control" placeholder="Password" type="password" required>
+                    <div class="invalid-feedback">
+                        Please provide a password.
+                    </div>
+                </div> <!-- form-group// -->
+                
+                <div class="form-group">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="remember" id="remember">
+                        <label class="form-check-label" for="remember">Remember me</label>
+                    </div>
+                </div> <!-- form-group form-check .// -->
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                </div> <!-- form-group// -->    
+            </form>
+        </div> <!-- card-body.// -->
+    </div> <!-- card .// -->
+
+    <p class="text-center mt-4">Don't have an account? <a href="{% url 'signup' %}" class="btn btn-link">Sign up</a></p>
+    <br><br>
+    <!-- ============================ COMPONENT LOGIN  END.// ================================= -->
+    </section>
+
+
+{% endblock %}
+
+
+
+
